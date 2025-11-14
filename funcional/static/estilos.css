@@ -1,0 +1,251 @@
+:root{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --accent:#0b73ff;
+  --accent-2:#0b5bcc;
+  --danger:#e11d48;
+  --border: #e6e9ef;
+  --shadow: 0 6px 18px rgba(20,25,40,0.06);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+#full-screen-background-image {
+    z-index: -999;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+
+html,body{
+  
+  height:100%;
+  margin:0;
+  color:#0f172a;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:20px;
+}
+
+.container{
+  max-width:980px;
+  margin:0 auto;
+}
+
+.card{
+  background:var(--card);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+  padding:22px;
+}
+
+header.app-title{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:18px;
+}
+header.app-title h1{
+  display: block;
+  font-size:20px;
+  margin:0;
+}
+header.app-title .icon{
+  font-size:22px;
+}
+p.lead{
+  margin:6px 0 18px 0;
+  color:var(--muted);
+  font-size:14px;
+}
+
+form.grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px 18px;
+  align-items:end;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+label{
+  font-size:13px;
+  color:var(--muted);
+}
+select, input[type="number"], input[type="text"], input[type="time"]{
+  height:40px;
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#fff;
+  font-size:14px;
+}
+
+.full{
+  grid-column: 1 / -1;
+}
+
+.small-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.btn{
+  height:40px;
+  padding:0 14px;
+  border-radius:8px;
+  border:0;
+  cursor:pointer;
+  font-weight:600;
+  background:var(--accent);
+  color:white;
+  background: #003366;
+  box-shadow: 0 6px 12px rgba(11,115,255,0.12);
+}
+
+.btn.secondary{
+  background:transparent;
+  color:var(--accent-2);
+  border:1px solid rgba(11,88,204,0.12);
+  font-weight:600;
+}
+
+.assignments{
+  margin-top:18px;
+}
+.assignments h3{
+  margin:0 0 8px 0;
+  font-size:15px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.table-wrap{
+  overflow:auto;
+  margin-top:8px;
+  border-radius:8px;
+  border:1px solid var(--border);
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+  min-width:680px;
+  background: #fff;
+}
+thead th{
+  text-align:left;
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+  color:var(--muted);
+  font-size:13px;
+}
+tbody td{
+  padding:12px 14px;
+  border-bottom:1px solid #f1f4f8;
+}
+tbody tr:last-child td { border-bottom: none; }
+
+@media (max-width:820px){
+  form.grid{ grid-template-columns: 1fr; }
+  .small-row{ flex-wrap:wrap; }
+  .container{ padding:10px; }
+}
+/* === Tabla de asignaciones === */
+.contenedor-tabla {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 25px;
+}
+
+.titulo-tabla {
+  text-align: center;
+  color: #2a3d66;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.tabla-asignaciones {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabla-asignaciones th,
+.tabla-asignaciones td {
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  text-align: center;
+}
+
+.tabla-asignaciones th {
+  background-color: #f4f7ff;
+  color: #1a237e;
+  font-weight: bold;
+}
+
+.tabla-asignaciones tr:nth-child(even) {
+  background-color: #fafbff;
+}
+
+.tabla-asignaciones tr:hover {
+  background-color: #eef3ff;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.mensaje-vacio {
+  background: #fff3cd;
+  color: #856404;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 20px;
+  border: 1px solid #ffeeba;
+}
+.btn-ver {
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-ver:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.btn-ver:active {
+  transform: translateY(0);
+  background-color: #004085;
+}
+
+.image {
+  width: 50%;               /* Tamaño fijo más pequeño */
+  height: auto;               /* Mantiene proporción */
+  border-radius: 10px;        /* Bordes redondeados opcional */
+}
+
+.contenedor-img {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  height: 20%;              /* Centra verticalmente */
+}
+

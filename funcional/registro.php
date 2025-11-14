@@ -1,0 +1,207 @@
+  <?php include("./conexion/conexion.php"); ?>
+  <!doctype html>
+  <html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Registrar cursos</title>
+    <link rel="stylesheet" href="./static/estilos.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  </head>
+  <body>
+    <img id="full-screen-background-image" src="./static/fondo.jpg" alt="full screen background image">
+
+    <div class="container">
+      <div class="card">
+        <h1>Creación de horario</h1>
+        <header class="app-title">
+          <div class="contenedor-img">
+            <img class="image" src="./static/logoEsteca.png" alt="Logo">
+          </div>
+        </header>
+
+        <!-- FORMULARIO ASIGNACION -->
+        <form id="asignacion-form" class="grid" onsubmit="return false;">
+          <div class="field">
+            <label>Profesor</label>
+            <select id="profesor" name="docente_id">
+              <option value="">Sin profesor</option>
+              <?php
+              $res = $conn->query("SELECT * FROM docentes ORDER BY nombre");
+              while($r = $res->fetch_assoc()){
+                echo "<option value='{$r['id']}'>{$r['nombre']}</option>";
+              }
+              ?>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Curso</label>
+            <select id="curso" name="curso_id">
+              <option value="">Seleccione un curso</option>
+              <?php
+              $res = $conn->query("SELECT * FROM cursos ORDER BY nombre");
+              while($r = $res->fetch_assoc()){
+                echo "<option value='{$r['id']}'>{$r['nombre']}</option>";
+              }
+              ?>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Carreras</label>
+            <select id="carrera" name="carrera_ids[]" multiple style="width:100%;">
+              <?php
+              $res = $conn->query("SELECT * FROM carreras ORDER BY nombre");
+              while($r = $res->fetch_assoc()){
+                echo "<option value='{$r['id']}'>{$r['nombre']}</option>";
+              }
+              ?>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Sección</label>
+            <select id="seccion" name="seccion_id">
+              <?php
+              $res = $conn->query("SELECT s.id, s.nombre, j.nombre AS jornada
+                                  FROM secciones s
+                                  JOIN jornadas j ON j.id = s.jornada_id
+                                  ORDER BY s.nombre");
+              while($r = $res->fetch_assoc()){
+                echo "<option value='{$r['id']}'>{$r['nombre']} - {$r['jornada']}</option>";
+              }
+              ?>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Cantidad de períodos (40 min c/u)</label>
+            <input type="number" id="cantidad" name="cantidad" value="6" min="1" max="12">
+          </div>
+
+          <div class="field">
+            <label>Jornada</label>
+            <select id="jornada" name="jornada">
+              <?php
+              $res = $conn->query("SELECT * FROM jornadas ORDER BY nombre");
+              while($r = $res->fetch_assoc()){
+                echo "<option value='{$r['nombre']}'>{$r['nombre']}</option>";
+              }
+              ?>
+            </select>
+          </div>
+
+          <div class="actions full">
+            <button type="button" id="btn-add" class="btn">Agregar a vista previa</button>
+            <button type="button" onclick="window.location.href='ver_asignaciones_docente.php'" class="btn">Ver Horario</button>
+            <button type="button" onclick="window.location.href='agregar_profesor.php'" class="btn">Nuevo profesor</button>
+
+          </div>
+        </form>
+
+        <!-- CONTENEDOR DE VISTA PREVIA -->
+        <div id="preview-container" style="display:none; margin-top: 20px;">
+          <h3>Vista previa de asignaciones</h3>
+          <table id="preview-table" border="1" cellspacing="0" cellpadding="5" style="width:100%; background:white; border-collapse:collapse;">
+            <thead>
+              <tr style="background:#f0f0f0;">
+                <th>Profesor</th>
+                <th>Curso</th>
+                <th>Carrera(s)</th>
+                <th>Sección</th>
+                <th>Períodos</th>
+                <th>Jornada</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <br>
+          <button id="btn-submit" class="btn" style="display:none;">Confirmar y guardar</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function(){
+        $('#carrera').select2({
+          placeholder:"Seleccione una o varias carreras",
+          allowClear:true
+        });
+      });
+
+      // Agregar curso a la vista previa
+      $('#btn-add').on('click', function(){
+        let profesorId = $('#profesor').val();
+        let profesor = $('#profesor option:selected').text() || 'Sin profesor';
+        let cursoId = $('#curso').val();
+        let curso = $('#curso option:selected').text();
+        let carreraIds = $('#carrera').val() || [];
+        let carreras = $('#carrera option:selected').map(function(){return $(this).text();}).get();
+        let seccionId = $('#seccion').val();
+        let seccion = $('#seccion option:selected').text();
+        let cantidad = $('#cantidad').val();
+        let jornada = $('#jornada option:selected').text();
+
+        if(!cursoId || carreraIds.length === 0){
+          alert("Debe seleccionar al menos un curso y una carrera.");
+          return;
+        }
+
+        let dataIds = JSON.stringify({
+          profesorId, cursoId, carreraIds, seccionId, cantidad, jornada
+        });
+
+        let nuevaFila = `
+          <tr data-ids='${dataIds}'>
+            <td contenteditable="true">${profesor}</td>
+            <td>${curso}</td>
+            <td>${carreras.join(', ')}</td>
+            <td>${seccion}</td>
+            <td>${cantidad}</td>
+            <td>${jornada}</td>
+            <td><button type="button" class="btn-small btn-delete">🗑 Eliminar</button></td>
+          </tr>
+        `;
+
+        $('#preview-table tbody').append(nuevaFila);
+        $('#preview-container').slideDown();
+        $('#btn-submit').show();
+      });
+
+      // Eliminar fila
+      $(document).on('click', '.btn-delete', function(){
+        $(this).closest('tr').remove();
+        if($('#preview-table tbody tr').length === 0){
+          $('#preview-container').slideUp();
+          $('#btn-submit').hide();
+        }
+      });
+
+      // Confirmar y guardar todo
+      $('#btn-submit').on('click', function(){
+        let datos = [];
+        $('#preview-table tbody tr').each(function(){
+          datos.push(JSON.parse($(this).attr('data-ids')));
+        });
+
+        $.ajax({
+          url: 'guardar_asignacion.php',
+          method: 'POST',
+          data: { asignaciones: JSON.stringify(datos) },
+          success: function(resp){
+            alert(resp);
+            window.location.href = 'ver_asignaciones_docente.php';
+          },
+          error: function(){
+            alert("Error al guardar las asignaciones.");
+          }
+        });
+      });
+    </script>
+  </body>
+  </html>
+        

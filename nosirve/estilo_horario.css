@@ -1,0 +1,72 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f7f9fc;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.filtros {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.filtros select, .filtros button {
+  padding: 8px 12px;
+  margin: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
+  font-size: 14px;
+}
+
+.filtros button {
+  background: #4A90E2;
+  color: white;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
+}
+
+.filtros button:hover {
+  background: #357ABD;
+}
+
+table.horario {
+  border-collapse: collapse;
+  width: 100%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+table.horario th, table.horario td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+table.horario th {
+  background: #4A90E2;
+  color: white;
+  font-weight: 600;
+}
+
+table.horario td {
+  height: 70px;
+  font-size: 14px;
+  color: #333;
+}
+
+table.horario td small {
+  color: #666;
+  font-size: 12px;
+}
+
+table.horario tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

@@ -1,0 +1,191 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f6f9fc;
+  margin: 0;
+  padding: 20px;
+}
+
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+/* === Filtros === */
+.filtros {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.filtros label {
+  font-weight: bold;
+  color: #333;
+}
+
+.filtros select {
+  padding: 6px 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 250px;
+}
+
+.btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* === Tabla de horario === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+th,
+td {
+  border: 1px solid #e0e0e0;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+}
+
+th {
+  background-color: #f0f3f5;
+  color: #333;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+td {
+  color: #333;
+  vertical-align: middle;
+}
+
+/* Filas alternadas tipo DataTable */
+tr:nth-child(even) td {
+  background-color: #e9f7ff;
+}
+
+tr:nth-child(odd) td {
+  background-color: #dfffea;
+}
+
+tr:hover td {
+  background-color: #f5faff;
+}
+
+/* Celdas con asignaciones */
+.celda-curso {
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #000;
+  line-height: 1.3;
+}
+
+/* Variantes de color (por tipo de curso o jornada) */
+.celda-curso.azul {
+  background-color: #cde4ff;
+}
+
+.celda-curso.verde {
+  background-color: #bfffd0;
+}
+
+.celda-curso.amarillo {
+  background-color: #fff4cc;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+    text-align: left;
+  }
+
+  tr {
+    margin-bottom: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* === Colores automáticos por carrera === */
+.celda-curso {
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #000;
+}
+
+/* Paleta de colores suaves */
+.celda-curso.azul {
+  background-color: #cde4ff;
+}
+
+.celda-curso.verde {
+  background-color: #c7f5d9;
+}
+
+.celda-curso.amarillo {
+  background-color: #fff4cc;
+}
+
+.celda-curso.rosa {
+  background-color: #ffd6eb;
+}
+
+.celda-curso.celeste {
+  background-color: #c4f2ff;
+}
+
+/* Hover */
+.celda-curso:hover {
+  filter: brightness(0.95);
+  cursor: pointer;
+}
