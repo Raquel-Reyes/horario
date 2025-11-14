@@ -28,7 +28,6 @@ foreach ($asignaciones as $a) {
   $seccion_id = intval($a['seccionId']);
   $cantidad = intval($a['cantidad']);
   $jornada_texto = strtolower(trim($a['jornada']));
-  $anio = intval($a['anio']);
 
   // 🔹 Mapeo entre texto y jornada_id (según tu tabla "jornadas")
   switch ($jornada_texto) {
